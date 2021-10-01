@@ -1,10 +1,10 @@
 const express = require('express')
-const listData = require('./data')
+const dataStore = require('./data')
 
 const app = express()
 
 app.get('/', (req: any, res: any) => {
-  res.end('333')
+  res.json(dataStore.list)
 })
 
 app.listen(8080, () => {
