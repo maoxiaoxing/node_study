@@ -29,8 +29,28 @@
 // 获取参数
 // console.log(process.argv)
 
-console.log(process.pid)
+// console.log(process.pid)
 
 // 项目运行时间
-console.log(process.uptime())
+// console.log(process.uptime())
 
+
+
+// 事件
+// exit只能执行同步代码，不能执行异步代码
+// process.on('exit', (code) => {
+//   console.log('exit', code)
+//   setTimeout(() => {
+//     console.log('异步代码', 'exit')
+//   })
+// })
+
+// process.on('beforeExit', (code) => {
+//   console.log('beforeExit', code)
+//   setTimeout(() => {
+//     console.log('异步代码', 'beforeExit')
+//   }, 1000)
+// })
+// console.log('代码执行完毕')
+
+// process.exit()
