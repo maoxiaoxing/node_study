@@ -6,7 +6,7 @@ console.log(__dirname)
 
 console.log(this === global)
 
-// (function test() {
+// (function () {
 //   console.log(this === global)
 // })()
 
