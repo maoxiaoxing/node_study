@@ -29,3 +29,10 @@ const path = require('path')
 // console.log(path.extname('/a/b'))
 // console.log(path.extname('/a/b/index.html.js'))
 // console.log(path.extname('/a/b/index.html.'))
+
+
+// 解析路径
+// 接收一个路径 返回一个对象 包含不同的信息
+// console.log(path.parse('/a/b/c/index.html'))
+// console.log(path.parse('/a/b/c/'))
+// console.log(path.parse('./a/b/c/'))
