@@ -1,6 +1,6 @@
 const path = require('path')
 
-console.log(__filename)
+// console.log(__filename)
 // 1 获取路径中的基础名称
 // 返回 path 的最后一部分
 // 第二个参数表示扩展名，如果没有，则返回完整的文件名称带后缀
@@ -19,3 +19,11 @@ console.log(__filename)
 // console.log(path.dirname(__filename))
 // console.log(path.dirname('/a/b'))
 // console.log(path.dirname('/a/b/'))
+
+
+
+// 获取路径的扩展名
+// console.log(path.extname(__filename))
+// console.log(path.extname('/a/b'))
+// console.log(path.extname('/a/b/index.html.js'))
+// console.log(path.extname('/a/b/index.html.'))
