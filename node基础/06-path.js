@@ -36,3 +36,8 @@ const path = require('path')
 // console.log(path.parse('/a/b/c/index.html'))
 // console.log(path.parse('/a/b/c/'))
 // console.log(path.parse('./a/b/c/'))
+
+
+// 序列化路径
+const obj = path.parse('./a/b/c/index.html')
+console.log(path.format(obj))
