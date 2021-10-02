@@ -6,9 +6,16 @@ console.log(__filename)
 // 第二个参数表示扩展名，如果没有，则返回完整的文件名称带后缀
 // 第二个参数作为后缀时，如果没有在当前路径中被匹配到，那么就会忽略
 // 处理目录路径的时候，结尾处有路径分隔符，则会被忽略掉
-console.log(path.basename(__filename))
-console.log(path.basename(__filename, '.js'))
-console.log(path.basename(__filename, '.css'))
-console.log(path.basename(__filename, 'js'))
-console.log(path.basename('/a/b/c'))
-console.log(path.basename('/a/b/c/'))
+// console.log(path.basename(__filename))
+// console.log(path.basename(__filename, '.js'))
+// console.log(path.basename(__filename, '.css'))
+// console.log(path.basename(__filename, 'js'))
+// console.log(path.basename('/a/b/c'))
+// console.log(path.basename('/a/b/c/'))
+
+
+// 获取路径目录名
+// path.dirname 返回路径中的最后一部分的上一层目录所在路径
+// console.log(path.dirname(__filename))
+// console.log(path.dirname('/a/b'))
+// console.log(path.dirname('/a/b/'))
