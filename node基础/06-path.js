@@ -51,3 +51,16 @@ const path = require('path')
 // console.log(path.isAbsolute(''))
 // console.log(path.isAbsolute('.'))
 // console.log(path.isAbsolute('../'))
+
+
+// 拼接路径
+console.log(path.join('a/b', 'c', 'index.html'))
+console.log(path.join('/a/b', 'c', 'index.html'))
+console.log(path.join('a/b', 'c', '../', 'index.html'))
+console.log(path.join('a/b', 'c', './', 'index.html'))
+console.log(path.join('a/b', 'c', '', 'index.html'))
+console.log(path.join(''))
+console.log(path.join('/a/b', '/c', '/index.html'))
+console.log(path.join('/a/b', '///c/', '//index.html'))
+
+
