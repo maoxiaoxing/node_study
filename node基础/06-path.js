@@ -70,3 +70,12 @@ const path = require('path')
 // console.log(path.normalize(''))
 // console.log(path.normalize('/a/b\\d/c\/d'))
 // console.log(path.normalize('/a/b/\b/c\/d'))
+
+
+// 绝对路径
+// console.log(path.resolve())
+// console.log(path.resolve('a', 'b'))
+// console.log(path.resolve('a', '/b'))
+// console.log(path.resolve('/a', 'b'))
+// console.log(path.resolve('/a', '../b'))
+// console.log(path.resolve('index.html'))
