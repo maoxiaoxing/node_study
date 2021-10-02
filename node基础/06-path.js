@@ -54,13 +54,19 @@ const path = require('path')
 
 
 // 拼接路径
-console.log(path.join('a/b', 'c', 'index.html'))
-console.log(path.join('/a/b', 'c', 'index.html'))
-console.log(path.join('a/b', 'c', '../', 'index.html'))
-console.log(path.join('a/b', 'c', './', 'index.html'))
-console.log(path.join('a/b', 'c', '', 'index.html'))
-console.log(path.join(''))
-console.log(path.join('/a/b', '/c', '/index.html'))
-console.log(path.join('/a/b', '///c/', '//index.html'))
+// console.log(path.join('a/b', 'c', 'index.html'))
+// console.log(path.join('/a/b', 'c', 'index.html'))
+// console.log(path.join('a/b', 'c', '../', 'index.html'))
+// console.log(path.join('a/b', 'c', './', 'index.html'))
+// console.log(path.join('a/b', 'c', '', 'index.html'))
+// console.log(path.join(''))
+// console.log(path.join('/a/b', '/c', '/index.html'))
+// console.log(path.join('/a/b', '///c/', '//index.html'))
 
 
+// 规范化路径
+// console.log(path.normalize('/a/b/c/d'))
+// console.log(path.normalize('/a/b\\/c\/d'))
+// console.log(path.normalize(''))
+// console.log(path.normalize('/a/b\\d/c\/d'))
+// console.log(path.normalize('/a/b/\b/c\/d'))
