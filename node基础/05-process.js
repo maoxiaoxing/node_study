@@ -54,3 +54,28 @@
 // console.log('代码执行完毕')
 
 // process.exit()
+
+
+
+
+// 标准输入输出
+
+// console.log = function(data) {
+//   process.stdout.write('---' + data + '\n')
+// }
+// console.log(123)
+// console.log(456)
+
+// const fs = require('fs')
+// fs.createReadStream('test.txt')
+//   .pipe(process.stdout)
+
+// process.stdin.pipe(process.stdout)
+
+process.stdin.setEncoding('utf-8')
+process.stdin.on('readable', () => {
+  const chunk = process.stdin.read()
+  if (chunk) {
+    process.stdout.write('data ' + chunk)
+  }
+})
