@@ -39,5 +39,15 @@ const path = require('path')
 
 
 // 序列化路径
-const obj = path.parse('./a/b/c/index.html')
-console.log(path.format(obj))
+// const obj = path.parse('./a/b/c/index.html')
+// console.log(path.format(obj))
+
+
+// 判断当前路径是否为绝对路径
+// console.log(path.isAbsolute('foo'))
+// console.log(path.isAbsolute('/foo'))
+// console.log(path.isAbsolute('///foo'))
+// console.log(path.isAbsolute('./foo'))
+// console.log(path.isAbsolute(''))
+// console.log(path.isAbsolute('.'))
+// console.log(path.isAbsolute('../'))
