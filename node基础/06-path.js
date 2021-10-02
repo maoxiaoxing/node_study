@@ -23,6 +23,8 @@ const path = require('path')
 
 
 // 获取路径的扩展名
+// 返回path 路径中文件名的后缀
+// 如果路径中存在多个点，它匹配的是最后一个到结尾的内容
 // console.log(path.extname(__filename))
 // console.log(path.extname('/a/b'))
 // console.log(path.extname('/a/b/index.html.js'))
