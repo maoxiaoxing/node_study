@@ -21,10 +21,10 @@
 
 
 // from 是新创建空间，而不是和 b1 共享一个空间
-const b1 = Buffer.alloc(3)
-const b2 = Buffer.from(b1)
-console.log(b1)
-console.log(b2)
-b1[0] = 1
-console.log(b1)
-console.log(b2)
+// const b1 = Buffer.alloc(3)
+// const b2 = Buffer.from(b1)
+// console.log(b1)
+// console.log(b2)
+// b1[0] = 1
+// console.log(b1)
+// console.log(b2)
