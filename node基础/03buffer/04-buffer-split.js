@@ -5,9 +5,11 @@ Buffer.prototype.split = function (sep) {
   let offset = 0
 
   while((offset = this.indexOf(sep, start)) !== -1) {
+    console.log(offset, 'offset')
     ret.push(this.slice(start, offset))
     start = offset + len
   }
+  ret.push(this.slice(start))
   return ret
 }
 
