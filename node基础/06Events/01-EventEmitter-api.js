@@ -27,4 +27,12 @@ const ev = new EventEmitter()
 // ev.emit('event')
 
 
+// off
+const cb = () => {
+  console.log('事件')
+}
+ev.on('event', cb)
+ev.emit('event')
+ev.off('event', cb)
+ev.emit('event')
 
