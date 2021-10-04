@@ -38,12 +38,17 @@ const ev = new EventEmitter()
 
 
 // 传递参数
-const cb = (a, b, c) => {
-  console.log(a)
-  console.log(b)
-  console.log(c)
-}
-ev.on('event', cb)
-ev.emit('event', 1, 2, 3)
+// const cb = (a, b, c) => {
+//   console.log(a)
+//   console.log(b)
+//   console.log(c)
+// }
+// ev.on('event', cb)
+// ev.emit('event', 1, 2, 3)
 
 
+// 事件对象
+// ev.on('event', function() {
+//   console.log(this)
+// })
+// ev.emit('event')
