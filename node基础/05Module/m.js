@@ -21,7 +21,7 @@
 
 
 // 四、同步加载
-// module.exports = 'maoxiaoxing'
+module.exports = 'maoxiaoxing'
 // let date = new Date()
 // while (new Date() - date < 4000) {}
 // console.log('m.js被加载了')
