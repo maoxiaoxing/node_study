@@ -52,3 +52,11 @@ const ev = new EventEmitter()
 //   console.log(this)
 // })
 // ev.emit('event')
+
+
+setTimeout(() => {
+  ev.emit('event')
+})
+ev.on('event', function() {
+  console.log('事件执行了')
+})
