@@ -28,13 +28,13 @@ const ev = new EventEmitter()
 
 
 // off
-// const cb = () => {
-//   console.log('事件')
-// }
-// ev.on('event', cb)
-// ev.emit('event')
-// ev.off('event', cb)
-// ev.emit('event')
+const cb = () => {
+  console.log('事件')
+}
+ev.on('event', cb)
+ev.off('event', cb)
+ev.emit('event')
+ev.emit('event')
 
 
 // 传递参数

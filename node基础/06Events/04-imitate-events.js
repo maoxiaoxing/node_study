@@ -1,19 +1,27 @@
 function MyEvent () {
-  this._event = Object.create(null)
+  this._events = Object.create(null)
 }
 
 MyEvent.prototype.on = function (type, cb) {
-  if (this._event[type]) {
-    this._event[type].push(cb)
+  if (this._events[type]) {
+    this._events[type].push(cb)
   } else {
-    this._event[type] = [cb]
+    this._events[type] = [cb]
   }
 }
 
 MyEvent.prototype.emit = function (type, ...args) {
-  if (this._event && this._event[type].length) {
-    this._event[type].forEach((cb) => {
+  if (this._events && this._events[type].length) {
+    this._events[type].forEach((cb) => {
       cb.call(this, ...args)
+    })
+  }
+}
+
+MyEvent.prototype.off = function (type, cb) {
+  if (this._events && this._events[type]) {
+    this._events[type] = this._events[type].filter((item) => {
+      return item !== cb
     })
   }
 }
@@ -21,12 +29,11 @@ MyEvent.prototype.emit = function (type, ...args) {
 
 
 const evt = new MyEvent()
+const fn = () => {
+  console.log('en执行了')
+}
 
-evt.on('en', () => {
-  console.log('en执行了')
-})
-evt.on('en', () => {
-  console.log('en执行了')
-})
+evt.on('en', fn)
+evt.off('en', fn)
 
 evt.emit('en')
