@@ -21,9 +21,18 @@ MyEvent.prototype.emit = function (type, ...args) {
 MyEvent.prototype.off = function (type, cb) {
   if (this._events && this._events[type]) {
     this._events[type] = this._events[type].filter((item) => {
-      return item !== cb
+      return item !== cb && item.link !== cb
     })
   }
+}
+
+MyEvent.prototype.once = function (type, cb) {
+  const fn = function(...args) {
+    cb.call(this, ...args)
+    this.off(type, fn)
+  }
+  fn.link = cb
+  this.on(type, fn)
 }
 
 
@@ -33,7 +42,12 @@ const fn = () => {
   console.log('en执行了')
 }
 
-evt.on('en', fn)
-evt.off('en', fn)
+// evt.on('en', fn)
+// evt.on('en', fn)
+// evt.off('en', fn)
 
+// evt.emit('en')
+evt.once('en', fn)
 evt.emit('en')
+evt.emit('en')
+
