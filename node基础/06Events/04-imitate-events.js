@@ -9,3 +9,24 @@ MyEvent.prototype.on = function (type, cb) {
     this._event[type] = [cb]
   }
 }
+
+MyEvent.prototype.emit = function (type, ...args) {
+  if (this._event && this._event[type].length) {
+    this._event[type].forEach((cb) => {
+      cb.call(this, ...args)
+    })
+  }
+}
+
+
+
+const evt = new MyEvent()
+
+evt.on('en', () => {
+  console.log('en执行了')
+})
+evt.on('en', () => {
+  console.log('en执行了')
+})
+
+evt.emit('en')
