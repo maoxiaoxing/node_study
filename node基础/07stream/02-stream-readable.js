@@ -8,6 +8,7 @@ class MyReadable extends Readable {
     this.source = source
   }
 
+  // 必须要有 _read
   _read() {
     const data = this.source.shift() || null
     this.push(data)
@@ -16,9 +17,13 @@ class MyReadable extends Readable {
 }
 
 const myReadable = new MyReadable(source)
-myReadable.on('readable', () => {
-  let data = null
-  while((data = myReadable.read(1)) !== null) {
-    console.log(data.toString())
-  }
+// myReadable.on('readable', () => {
+//   let data = null
+//   while((data = myReadable.read(1)) !== null) {
+//     console.log(data.toString())
+//   }
+// })
+
+myReadable.on('data', (chunk) => {
+  console.log(chunk.toString())
 })
