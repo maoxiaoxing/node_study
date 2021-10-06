@@ -20,12 +20,33 @@ const rs = fs.createReadStream('test.txt', {
 // })
 
 
-rs.on('readable', () => {
-  let data
-  while((data = rs.read(1)) !== null) {
-    console.log(data.toString())
-    console.log('----', rs._readableState.length)
-  }
+// rs.on('readable', () => {
+//   let data
+//   while((data = rs.read(1)) !== null) {
+//     console.log(data.toString())
+//     console.log('----', rs._readableState.length)
+//   }
+// })
+
+
+rs.on('open', (fd) => {
+  console.log(fd, '文件打开了')
+})
+
+rs.on('close', () => {
+  console.log('文件关闭了')
+})
+
+rs.on('data', (chunk) => {
+  console.log(chunk)
+})
+
+rs.on('end', () => {
+  console.log('数据清空之后')
+})
+
+rs.on('error', () => {
+  console.log('出错了')
 })
 
 
