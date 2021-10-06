@@ -13,6 +13,10 @@ const rs = fs.createReadStream('test.txt', {
 
 rs.on('data', (chunk) => {
   console.log(chunk.toString())
+  rs.pause()
+  setTimeout(() => {
+    rs.resume()
+  }, 1000)
 })
 
 
