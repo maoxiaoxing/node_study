@@ -9,6 +9,7 @@ class MyFileReadStream extends EventEmitter {
       mode,
       autoClose,
       start,
+      end,
       highWaterMark,
     } = options
     this.path = path
@@ -16,7 +17,7 @@ class MyFileReadStream extends EventEmitter {
     this.flags = flags || 'r'
     this.autoClose = autoClose || true
     this.start = start || 0
-    this.end = start
+    this.end = end
     this.highWaterMark = highWaterMark || 64 * 1024
     this.readOffset = 0
 
@@ -45,10 +46,13 @@ class MyFileReadStream extends EventEmitter {
       return this.once('open', this.read)
     }
     const buf = Buffer.alloc(this.highWaterMark)
-    fs.read(this.fd, buf, 0, this.highWaterMark, this.readOffset, (err, readBytes) => {
+
+    let howMuchToRead
+    howMuchToRead = this.end ? Math.min(this.end - this.readOffset + 1, this.highWaterMark) : this.highWaterMark
+    fs.read(this.fd, buf, 0, howMuchToRead, this.readOffset, (err, readBytes) => {
       if (readBytes) {
         this.readOffset += readBytes
-        this.emit('data', buf)
+        this.emit('data', buf.slice(0, readBytes))
         this.read()
       } else {
         this.emit('end')
