@@ -7,7 +7,7 @@ const HOST = 'localhost'
 server.listen(PORT, HOST)
 
 server.on('listening', () => {
-  console.log('服务已经开启')
+  console.log(`服务已经开启${HOST}:${PORT}`)
 })
 
 server.on('connection', (socket) => {
