@@ -1,4 +1,5 @@
 const net = require('net')
+const dealData = require('./dealData')
 
 const server = net.createServer()
 
@@ -13,9 +14,11 @@ server.on('listening', () => {
 
 server.on('connection', (_socket) => {
   _socket.on('data', (chunk) => {
-    const msg = chunk.toString()
-    console.log(msg)
-    _socket.write(Buffer.from('您好' + msg))
+    // const msg = chunk.toString()
+    // console.log(msg)
+    // _socket.write(Buffer.from('您好' + msg))
+
+    dealData('server', chunk, _socket)
   })
 })
 

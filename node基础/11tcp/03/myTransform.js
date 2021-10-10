@@ -13,8 +13,8 @@ class MyTransformCode {
     headerBuf.writeInt16BE(serialNum || this.serialNum)
     headerBuf.writeInt16BE(body.length, this.serialLen)
 
-    if (serialNum !== undefined) {
-      serialNum++
+    if (serialNum == undefined) {
+      this.serialNum++
     }
 
     return Buffer.concat([headerBuf, body])
