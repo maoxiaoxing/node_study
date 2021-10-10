@@ -19,4 +19,16 @@ class MyTransfromCode {
 
     return Buffer.concat([headerBuf, body])
   }
+
+  // 解码
+  decode(buffer) {
+    const headerBuf = buffer.slice(0, this.packageHeaderLen)
+    const bodyBuf = buffer.slice(this.packageHeaderLen)
+
+    return {
+      serialNum: headerBuf.readInt16BE(),
+      bodyLength: headerBuf.readInt16BE(this.serialLen),
+      body: bodyBuf.toString()
+    }
+  }
 }
