@@ -2,6 +2,7 @@ const http = require('http')
 
 const server = http.createServer((req, res) => {
   res.setHeader('Content-type', 'text/html;charset=utf-8')
+  res.statusCode = 304
   res.end('小熊饼干')
 })
 
