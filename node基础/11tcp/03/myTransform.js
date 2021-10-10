@@ -31,4 +31,13 @@ class MyTransfromCode {
       body: bodyBuf.toString()
     }
   }
+
+  // 获取包的长度
+  getPackageLen(buffer) {
+    if (buffer.length < this.packageHeaderLen) {
+      return 0
+    } else {
+      return this.packageHeaderLen + buffer.readInt16BE(this.serialLen)
+    }
+  }
 }
