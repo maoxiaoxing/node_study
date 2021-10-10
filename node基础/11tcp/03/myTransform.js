@@ -1,4 +1,4 @@
-class MyTransfromCode {
+class MyTransformCode {
   constructor() {
     this.packageHeaderLen = 4
     this.serialNum = 0
@@ -13,7 +13,7 @@ class MyTransfromCode {
     headerBuf.writeInt16BE(serialNum || this.serialNum)
     headerBuf.writeInt16BE(body.length, this.serialLen)
 
-    if (serialNum == undefined) {
+    if (serialNum !== undefined) {
       serialNum++
     }
 
@@ -41,3 +41,5 @@ class MyTransfromCode {
     }
   }
 }
+
+module.exports = MyTransformCode
