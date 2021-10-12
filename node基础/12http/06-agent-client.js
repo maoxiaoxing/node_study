@@ -14,7 +14,8 @@ const options = {
   path: '/?a=1',
   method: 'POST',
   headers: {
-    "Content-type": "application/json",
+    // "Content-type": "application/json",
+    "Content-type": "application/x-www-form-urlencoded",
   }
 }
 
@@ -28,6 +29,8 @@ const req = http.request(options, (res) => {
   })
 })
 // req.end('小熊饼干')
-req.end('{"name": "小熊饼干"}')
+// req.end('{"name": "小熊饼干"}')
+req.end('a=1&b=2')
+
 
 
