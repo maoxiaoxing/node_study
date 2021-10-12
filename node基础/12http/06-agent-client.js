@@ -19,7 +19,13 @@ const options = {
 }
 
 const req = http.request(options, (res) => {
-
+  const arr = []
+  res.on('data', (data) => {
+    arr.push(data)
+  })
+  res.on('end', () => {
+    console.log(Buffer.concat(arr).toString())
+  })
 })
 // req.end('小熊饼干')
 req.end('{"name": "小熊饼干"}')

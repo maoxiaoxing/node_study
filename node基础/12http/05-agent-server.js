@@ -14,7 +14,12 @@ const server = http.createServer((req, res) => {
     arr.push(data)
   })
   req.on('end', () => {
-    console.log(Buffer.concat(arr).toString())
+    const obj = Buffer.concat(arr).toString()
+    if (req.headers['content-type'] === 'application/json') {
+      const aa = JSON.parse(obj)
+      aa.add = '互联网'
+      res.end(JSON.stringify(aa))
+    }
   })
 })
 
