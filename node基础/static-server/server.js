@@ -18,6 +18,15 @@ const server = http.createServer((req, res) => {
       res.end('Not Found')
       return
     }
+
+    if (statObj.isFile()) {
+      fs.readFile(absPath, (err, data) => {
+        res.setHeader('Content-type', '')
+        res.end(data)
+      })
+    } else {
+      
+    }
   })
 
   // res.end('123')
