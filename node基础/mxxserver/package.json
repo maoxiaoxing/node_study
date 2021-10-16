@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^8.2.0"
+    "commander": "^8.2.0",
+    "mime": "^2.5.2"
   }
 }
