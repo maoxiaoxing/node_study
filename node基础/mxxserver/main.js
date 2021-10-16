@@ -4,6 +4,8 @@ const url = require('url')
 const fs = require('fs').promises
 const { createReadStream } = require('fs')
 const mime = require('mime')
+const ejs = require('ejs')
+const { promisify } = require('util')
 
 function mergeConfig(config) {
   return {
@@ -33,6 +35,13 @@ class Server {
       const statObj = await fs.stat(abspath)
       if (statObj.isFile()) {
         this.fileHandle(req, res, abspath)
+      } else {
+        const dirs = await fs.readdir(abspath)
+        const renderFile = promisify(ejs.renderFile)
+        let ret = await renderFile(path.resolve(__dirname, 'template.html'), {
+          arr: dirs,
+        })
+        res.end(ret)
       }
     } catch(err) {
       this.errorHandle(req, res, err)
