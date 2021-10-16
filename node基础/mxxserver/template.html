@@ -5,11 +5,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    ul {
+      list-style: none;
+    }
+  </style>
 </head>
 <body>
+  <h3>IndexOf <%=title%></h3>
+
   <ul>
+    <%if(parent) {%>
+      <li><a href="<%=parentPath%>">上一层</a></li>
+    <%}%>
+
     <%for(let i = 0; i < arr.length; i++) {%>
-      <li herf="<%=arr[i].path%>"><%=arr[i]%></li>
+      <a href="<%=arr[i].path%>"><li><%=arr[i].dirs%></li></a>
     <%}%>
   </ul>
 </body>

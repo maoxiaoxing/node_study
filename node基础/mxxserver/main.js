@@ -17,7 +17,6 @@ function mergeConfig(config) {
 class Server {
   constructor(config) {
     this.config = mergeConfig(config)
-    console.log(this.config)
   }
 
   start() {
@@ -36,10 +35,22 @@ class Server {
       if (statObj.isFile()) {
         this.fileHandle(req, res, abspath)
       } else {
-        const dirs = await fs.readdir(abspath)
+        let dirs = await fs.readdir(abspath)
+        dirs = dirs.map((item) => {
+          return {
+            path: path.join(pathname, item),
+            dirs: item,
+          }
+        })
         const renderFile = promisify(ejs.renderFile)
+
+        const parentPath = path.dirname(pathname)
+
         let ret = await renderFile(path.resolve(__dirname, 'template.html'), {
           arr: dirs,
+          parent: pathname === '/' ? false : true,
+          parentPath: parentPath,
+          title: path.basename(abspath),
         })
         res.end(ret)
       }
