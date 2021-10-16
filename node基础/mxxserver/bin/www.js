@@ -38,7 +38,5 @@ program.version(version)
 
 let cmdConfig = program.parse(process.argv)
 
-console.log(cmdConfig)
-
-// let Server = require('../main.js')
-// new Server(cmdConfig).start()
+let Server = require('../main.js')
+new Server(cmdConfig).start()
