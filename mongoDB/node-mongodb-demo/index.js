@@ -9,7 +9,15 @@ async function run () {
     const inventtoryCollection = testDb.collection('inventory')
     // inventtoryCollection.insertOne({"name": 'jack', "age": 18})
     // inventtoryCollection.insertMany([{"name": 'king', "age": 21}, {"name": 'ben', "age": 19}])
-    const ret = await inventtoryCollection.find()
+    // const ret = await inventtoryCollection.find()
+    // const ret = await inventtoryCollection.find({
+    //   name: 'ben'
+    // })
+    // const ret = await inventtoryCollection.find({
+    //   age: {
+    //     $lt: 19
+    //   }
+    // })
     const arrRet = await ret.toArray()
     console.log(arrRet)
   } catch (err) {
