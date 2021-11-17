@@ -46,8 +46,20 @@ app.post('/articles', async (req, res, next) => {
 })
 
 // 获取文章
-app.get('/articles', (req, res) => {
-  res.send('get /articles')
+app.get('/articles', async (req, res, next) => {
+  try {
+    await dbClient.connect()
+    const collection = dbClient.db('test').collection('articles')
+    const ret = await collection.find()
+    const articles = await ret.toArray()
+    const total = await collection.countDocuments()
+    res.status(200).json({
+      articles,
+      total,
+    })
+  } catch(err) {
+    next(err)
+  }
 })
 
 // 文章详情
