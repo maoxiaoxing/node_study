@@ -28,7 +28,14 @@ async function run () {
     // console.log(res)
 
     // 更新
-    
+    const res = await inventtoryCollection.updateOne({
+      _id: ObjectId('6193b5d8a8bf1e21497ca502')
+    }, {
+      $set: {
+        qty: 1,
+      }
+    })
+    console.log(res)
 
     const ret = await inventtoryCollection.find()
     const arrRet = await ret.toArray()
