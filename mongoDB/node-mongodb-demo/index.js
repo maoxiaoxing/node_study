@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 
 const client = new MongoClient('mongodb://127.0.0.1:27017')
 
@@ -9,7 +9,6 @@ async function run () {
     const inventtoryCollection = testDb.collection('inventory')
     // inventtoryCollection.insertOne({"name": 'jack', "age": 18})
     // inventtoryCollection.insertMany([{"name": 'king', "age": 21}, {"name": 'ben', "age": 19}])
-    // const ret = await inventtoryCollection.find()
     // const ret = await inventtoryCollection.find({
     //   name: 'ben'
     // })
@@ -18,6 +17,11 @@ async function run () {
     //     $lt: 19
     //   }
     // })
+    const res = await inventtoryCollection.deleteOne({
+      _id: ObjectId('6193b55ff8783c9a5f4262a3')
+    })
+    console.log(res)
+    const ret = await inventtoryCollection.find()
     const arrRet = await ret.toArray()
     console.log(arrRet)
   } catch (err) {
