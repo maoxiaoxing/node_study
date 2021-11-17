@@ -13,29 +13,36 @@ app.get('/', (req, res) => {
 })
 
 // 创建文章
-app.post('/articles', async (req, res) => {
-  const {
-    article,
-  } = req.body
-
-  if (!article || !article.title || !article.description || !article.body) {
-    return res.status(422).json({
-      errmsg: '请求参数不符合规则要求'
+app.post('/articles', async (req, res, next) => {
+  try {
+    const {
+      article,
+    } = req.body
+  
+    if (!article || !article.title || !article.description || !article.body) {
+      return res.status(422).json({
+        errmsg: '请求参数不符合规则要求'
+      })
+    }
+  
+    await dbClient.connect()
+    const collection = dbClient.db('test').collection('articles')
+  
+    article.createdAt = new Date()
+    article.updateAt = new Date()
+    const ret = await collection.insertOne(article)
+  
+    article._id = ret.insertedId
+  
+    res.status(201).json({
+      article,
     })
+  } catch (err) {
+    // res.status(500).json({
+    //   errmsg: err.message
+    // })
+    next(err)
   }
-
-  await dbClient.connect()
-  const collection = dbClient.db('test').collection('articles')
-
-  article.createdAt = new Date()
-  article.updateAt = new Date()
-  const ret = await collection.insertOne(article)
-
-  article._id = ret.insertedId
-
-  res.status(201).json({
-    article,
-  })
 })
 
 // 获取文章
@@ -56,6 +63,13 @@ app.patch('/articles/:id', (req, res) => {
 // 删除文章
 app.delete('/articles/:id', (req, res) => {
   res.send('delete /articles/:id')
+})
+
+// 四个参数缺一不可
+app.use((err, req, res, next) => {
+  res.status(500).josn({
+    errmsg: err.message
+  })
 })
 
 app.listen(3000, () => {
