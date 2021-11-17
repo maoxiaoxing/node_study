@@ -1,4 +1,8 @@
 const express = require('express')
+const { MongoClient, Collection } = require('mongodb')
+
+const connectUri = 'mongodb://localhost:27017'
+const dbClient = new MongoClient(connectUri)
 
 const app = express()
 
@@ -9,9 +13,29 @@ app.get('/', (req, res) => {
 })
 
 // 创建文章
-app.post('/articles', (req, res) => {
-  console.log(req.body)
-  res.send('post /articles')
+app.post('/articles', async (req, res) => {
+  const {
+    article,
+  } = req.body
+
+  if (!article || !article.title || !article.description || !article.body) {
+    return res.status(422).json({
+      errmsg: '请求参数不符合规则要求'
+    })
+  }
+
+  await dbClient.connect()
+  const collection = dbClient.db('test').collection('articles')
+
+  article.createdAt = new Date()
+  article.updateAt = new Date()
+  const ret = await collection.insertOne(article)
+
+  article._id = ret.insertedId
+
+  res.status(201).json({
+    article,
+  })
 })
 
 // 获取文章
