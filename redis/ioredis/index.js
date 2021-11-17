@@ -5,6 +5,11 @@ const redis = new ioredis({
   host: '82.156.97.16'
 })
 
+// async function main () {
+//   const ret = await redis.get('foo')
+//   console.log(ret)
+// }
+// main()
 
 redis.set('foo', 'bar', (err, ret) => {
   if (err) {
