@@ -2,12 +2,15 @@ const express = require('express')
 
 const app = express()
 
+app.use(express.json())
+
 app.get('/', (req, res) => {
   res.send('hello world')
 })
 
 // 创建文章
 app.post('/articles', (req, res) => {
+  console.log(req.body)
   res.send('post /articles')
 })
 
