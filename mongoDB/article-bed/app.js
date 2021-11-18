@@ -98,8 +98,11 @@ app.post('/articles/update', async (req, res, next) => {
     }, {
       $set: req.body.article,
     })
+    const article = await collection.findOne({
+      _id: ObjectId(id)
+    })
     res.status(200).json({
-      errmsg: 'ok'
+      article,
     })
   } catch(err) {
     next(err)
