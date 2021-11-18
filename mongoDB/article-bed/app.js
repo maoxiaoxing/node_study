@@ -110,8 +110,22 @@ app.post('/articles/update', async (req, res, next) => {
 })
 
 // 删除文章
-app.delete('/articles/:id', (req, res) => {
-  res.send('delete /articles/:id')
+app.post('/articles/delete', async (req, res, next) => {
+  try {
+    const {
+      id,
+    } = req.body
+    await dbClient.connect()
+    const collection = dbClient.db('test').collection('articles')
+    await collection.deleteOne({
+      _id: ObjectId(id)
+    })
+    res.status(200).json({
+      errmsg: 'ok',
+    })
+  } catch(err) {
+    next(err)
+  }
 })
 
 // 四个参数缺一不可
