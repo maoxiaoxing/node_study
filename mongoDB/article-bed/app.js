@@ -48,9 +48,16 @@ app.post('/articles', async (req, res, next) => {
 // 获取文章
 app.get('/articles', async (req, res, next) => {
   try {
+    const { page = 1, pageSize = 10 } = req.query
+    const _page = Number.parseInt(page)
+    const _pageSize = Number.parseInt(pageSize)
     await dbClient.connect()
     const collection = dbClient.db('test').collection('articles')
-    const ret = await collection.find()
+    const ret = await collection
+      .find()
+      .skip((_page - 1) * _pageSize) // 跳过 n 条
+      .limit(_pageSize) // 拿到 n 条
+
     const articles = await ret.toArray()
     const total = await collection.countDocuments()
     res.status(200).json({
