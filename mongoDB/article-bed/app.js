@@ -86,8 +86,24 @@ app.get('/articles/:id', async (req, res, next) => {
 })
 
 // 更新文章
-app.patch('/articles/:id', (req, res) => {
-  res.send('patch /articles/:id')
+app.post('/articles/update', async (req, res, next) => {
+  try {
+    const {
+      id,
+    } = req.body
+    await dbClient.connect()
+    const collection = dbClient.db('test').collection('articles')
+    await collection.updateOne({
+      _id: ObjectId(id)
+    }, {
+      $set: req.body.article,
+    })
+    res.status(200).json({
+      errmsg: 'ok'
+    })
+  } catch(err) {
+    next(err)
+  }
 })
 
 // 删除文章
