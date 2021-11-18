@@ -1,5 +1,5 @@
 const express = require('express')
-const { MongoClient, Collection } = require('mongodb')
+const { MongoClient, ObjectId } = require('mongodb')
 
 const connectUri = 'mongodb://localhost:27017'
 const dbClient = new MongoClient(connectUri)
@@ -70,8 +70,19 @@ app.get('/articles', async (req, res, next) => {
 })
 
 // 文章详情
-app.get('/articles/:id', (req, res) => {
-  res.send('get /articles/:id')
+app.get('/articles/:id', async (req, res, next) => {
+  try {
+    await dbClient.connect()
+    const collection = dbClient.db('test').collection('articles')
+    const article = await collection.findOne({
+      _id: ObjectId(req.params.id)
+    })
+    res.status(200).json({
+      article,
+    })
+  } catch(err) {
+    next(err)
+  }
 })
 
 // 更新文章
