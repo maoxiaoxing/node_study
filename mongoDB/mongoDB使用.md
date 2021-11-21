@@ -532,7 +532,272 @@ _id 字段具有以下行为和约束：
 - _id 字段始终是文档中的第一个字段
 - _id 字段可以包含任何 BSON 数据类型的值，而不是数组。
 
+## 图形化操作
 
+http://www.navicat.com.cn/
 
+## 在 Node 中操作 MongoDB
+
+参考：
+
+- 在服务端操作 MongoDB：https://docs.mongodb.com/drivers/
+- 在 Node.js 中操作 MongoDB：https://docs.mongodb.com/drivers/node/
+
+### 初始化示例项目
+
+```shell
+mkdir node-mongodb-demo
+
+cd node-mongodb-demo
+
+npm init -y
+
+npm install mongodb
+```
+
+### 连接到 MongoDB
+
+```js
+const { MongoClient } = require("mongodb");
+// Connection URI
+const uri =
+  "mongo://127.0.0.1:27017";
+// Create a new MongoClient
+const client = new MongoClient(uri);
+async function run() {
+  try {
+    // Connect the client to the server
+    await client.connect();
+    // Establish and verify connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Connected successfully to server");
+  } catch () {
+    console.log('Connect failed')
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+
+run()
+```
+
+### CRUD 操作
+
+CRUD（创建，读取，更新，删除）操作使您可以处理存储在 MongoDB 中的数据。
+
+#### 创建文档
+
+插入一个：
+
+```js
+const pizzaDocument = {
+  name: "Neapolitan pizza",
+  shape: "round",
+  toppings: [ "San Marzano tomatoes", "mozzarella di bufala cheese" ],
+};
+
+const result = await pizzaCollection.insertOne(pizzaDocument);
+
+console.dir(result.insertedCount);
+```
+
+插入多个：
+
+```js
+const pizzaDocuments = [
+  { name: "Sicilian pizza", shape: "square" },
+  { name: "New York pizza", shape: "round" },
+  { name: "Grandma pizza", shape: "square" },
+];
+
+const result = pizzaCollection.insertMany(pizzaDocuments);
+
+console.dir(result.insertedCount);
+```
+
+#### 查询文档
+
+```js
+const findResult = await orders.find({
+  name: "Lemony Snicket",
+  date: {
+    $gte: new Date(new Date().setHours(00, 00, 00)),
+    $lt: new Date(new Date().setHours(23, 59, 59)),
+  },
+});
+
+```
+
+#### 删除文档
+
+```js
+const doc = {
+  pageViews: {
+    $gt: 10,
+    $lt: 32768
+  }
+};
+
+// 删除符合条件的单个文档
+const deleteResult = await collection.deleteOne(doc);
+console.dir(deleteResult.deletedCount);
+
+// 删除符合条件的多个文档
+const deleteManyResult = await collection.deleteMany(doc);
+console.dir(deleteManyResult.deletedCount);
+```
+
+#### 修改文档
+
+更新1个文档：
+
+```js
+const filter = { _id: 465 };
+// update the value of the 'z' field to 42
+const updateDocument = {
+   $set: {
+      z: 42,
+   },
+};
+
+// 更新多个
+const result = await collection.updateOne(filter, updateDocument);
+
+// 更新多个
+const result = await collection.updateMany(filter, updateDocument);
+```
+
+替换文档：
+
+```js
+const filter = { _id: 465 };
+// replace the matched document with the replacement document
+const replacementDocument = {
+   z: 42,
+};
+const result = await collection.replaceOne(filter, replacementDocument);
+```
+
+## MongoDB 数据库结合 Web 服务
+
+![](https://img2020.cnblogs.com/blog/1575596/202111/1575596-20211121113103316-1664491778.png)
+
+在这次演示中，我们来搭建一个支持 MongoDB 数据库 CRUD 操作的 Web 接口服务，用来进行博客文章的管理。
+通过本实战案例，希望你会对数据库及 Web 开发有更深一步的理解。
+
+### 接口设计
+
+> 基于 RESTful 接口规范。
+- [理解 RESTful 架构](http://www.ruanyifeng.com/blog/2011/09/restful.html)
+- [RESTful API 设计指南](http://www.ruanyifeng.com/blog/2014/05/restful_api.html)
+
+#### 创建文章
+
+- 请求路径：POST /articles
+- 请求参数：Body
+  * title
+  * description
+  * body
+  * tagList
+- 数据格式：application/json
+
+请求体示例：
+
+```json
+{
+  "article": {
+    "title": "How to train your dragon",
+    "description": "Ever wonder how?",
+    "body": "You have to believe",
+    "tagList": ["reactjs", "angularjs", "dragons"]
+  }
+}
+```
+
+返回数据示例：
+- 状态码：201
+- 响应数据：
+
+```json
+{
+  "article": {
+    "_id": 123,
+    "title": "How to train your dragon",
+    "description": "Ever wonder how?",
+    "body": "It takes a Jacobian",
+    "tagList": ["dragons", "training"],
+    "createdAt": "2016-02-18T03:22:56.637Z",
+    "updatedAt": "2016-02-18T03:48:35.824Z"
+  }
+}
+```
+
+#### 获取文章列表
+
+- 请求路径：GET /articles
+- 请求参数（Query）
+  * _page：页码
+  * _size：每页大小
+
+响应数据示例：
+- 状态码：200
+- 响应数据：
+
+```json
+{
+  "articles":[{
+    "_id": "how-to-train-your-dragon",
+    "title": "How to train your dragon",
+    "description": "Ever wonder how?",
+    "body": "It takes a Jacobian",
+    "tagList": ["dragons", "training"],
+    "createdAt": "2016-02-18T03:22:56.637Z",
+    "updatedAt": "2016-02-18T03:48:35.824Z"
+  }, {
+    "_id": "how-to-train-your-dragon-2",
+    "title": "How to train your dragon 2",
+    "description": "So toothless",
+    "body": "It a dragon",
+    "tagList": ["dragons", "training"],
+    "createdAt": "2016-02-18T03:22:56.637Z",
+    "updatedAt": "2016-02-18T03:48:35.824Z"
+  }],
+  "articlesCount": 2
+}
+```
+
+#### 获取单个文章
+
+- 请求路径：GET /articles/:id
+响应数据示例：
+- 状态码：200
+- 响应数据：
+
+```json
+{
+  "article": {
+    "_id": "dsa7dsa",
+    "title": "How to train your dragon",
+    "description": "Ever wonder how?",
+    "body": "It takes a Jacobian",
+    "tagList": ["dragons", "training"],
+    "createdAt": "2016-02-18T03:22:56.637Z",
+    "updatedAt": "2016-02-18T03:48:35.824Z"
+  }
+}
+```
+
+#### 更新文章
+
+- 请求路径：PATCH /artilces/:id
+- 请求参数（Body）
+  * title
+  * description
+  * body
+  * tagList
+请求体示例：
+- 状态码：201
+- 响应数据：
 
 
