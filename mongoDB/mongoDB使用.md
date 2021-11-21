@@ -205,3 +205,89 @@ mongod --dbpath="数据存储目录"
 
 如果单独执行 mongod，它会默认使用执行 mongod 命令所处磁盘根目录/data/db 作为数据存储目录。
 
+## mongo Shell
+
+### 什么是 mongo Shell
+
+- mongo Shell 是 MongoDB 官方提供的一个在命令行中用来连接操作 MongoDB 服务的客户端工具
+- 使用 mongo Shell 可以对 MongoDB 数据库进行数据的管理
+
+### 下载 mongo Shell
+
+mongo Shell 包含在 MongoDB 服务器安装中。如果您已经安装了服务器，则 mongo Shell 将安装在与服务器二进制文件相同的位置。
+另外，如果您想从 MongoDB 服务器上单独下载 mongo shell，可以参考这里：https://docs.mongodb.com/manual/mongo/#download-the-mongo-shell。
+
+### 启动 mongo Shell 并连接到 MongoDB
+
+#### 连接默认端口上的本地 MongoDB 服务
+
+您可以在没有任何命令行选项的情况下运行 mongo shell，以使用默认端口 27017 连接到在本地主机上运行的 MongoDB 实例： 
+
+```shell
+mongo
+```
+
+#### 连接非默认端口上的本地 MongoDB 服务
+
+要明确指定端口，请包括 --port 命令行选项。例如，要使用非默认端口 28015 连接到在 localhost 上运行的 MongoDB 实例，请执行以下操作：
+
+```shell
+mongo --port 28015
+```
+
+#### 连接远程主机上的 MongoDB 服务
+
+连接远程主机上的 MongoDB 服务需要明确指定主机名和端口号。
+您可以指定一个连接字符串。例如，要连接到在远程主机上运行的 MongoDB 实例，请执行以下操作： 
+
+```shell
+mongo "mongodb://mongodb0.example.com:28015"
+```
+
+您可以使用命令行选项 --host <主机>:<端口>。例如，要连接到在远程主机上运行的 MongoDB 实例，请执行以下操作： 
+
+```shell
+mongo --host mongodb0.example.com:28015
+```
+
+您可以使用--host <host>和--port <port>命令行选项。例如，要连接到在远程主机上运行的MongoDB实例，请执行以下操作： 
+
+```shell
+mongo --host mongodb0.example.com --port 28015
+```
+
+### 连接具有身份认证的 MongoDB 服务
+
+您可以在连接字符串中指定用户名，身份验证数据库以及可选的密码。例如，以alice用户身份连接并认证到远程MongoDB实例：
+
+```shell
+mongo "mongodb://alice@mongodb0.examples.com:28015/?authSource=admin"
+```
+
+您可以使用--username <user>和--password，--authenticationDatabase <db>命令行选项。例如，以alice用户身份连接并认证到远程MongoDB实例：
+
+```shell
+mongo --username alice --password --authenticationDatabase admin --host mongodb0.examples.com --port 28015
+```
+
+> 注意：如果您指定--password而不输入用户密码，则外壳程序将提示您输入密码。
+
+### mongo Shell 执行环境
+
+- 提供了 JavaScript 执行环境
+- 内置了一些数据库操作命令
+  * show dbs
+  * db
+  * use database
+  * show collections
+  * ...
+- 提供了一大堆的内置 API 用来操作数据库
+  ○ db.users.insert({ name: 'Jack', age: 18 })
+
+### 退出连接
+
+三种方式：
+
+- exit
+- quit()
+- Ctrl + C
