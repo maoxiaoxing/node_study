@@ -800,4 +800,236 @@ const result = await collection.replaceOne(filter, replacementDocument);
 - 状态码：201
 - 响应数据：
 
+```json
+{
+  "article": {
+    "title": "Did you train your dragon?"
+  }
+}
+```
+
+响应示例：
+
+```json
+{
+  "article": {
+    "_id": 123,
+    "title": "How to train your dragon",
+    "description": "Ever wonder how?",
+    "body": "It takes a Jacobian",
+    "tagList": ["dragons", "training"],
+    "createdAt": "2016-02-18T03:22:56.637Z",
+    "updatedAt": "2016-02-18T03:48:35.824Z"
+  }
+}
+```
+
+#### 删除文章
+
+● 接口路径：DELETE /articles/:id
+响应数据：
+● 状态码：204
+● 数据：
+
+```json
+{}
+```
+
+### 准备工作
+
+```shell
+mkdir article-bed
+
+cd api-serve
+
+npm init -y
+
+npm i express mongodb
+```
+
+#### 使用 Express 快速创建 Web 服务
+
+```js
+const express = require('express')
+const app = express()
+const port = 3000
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`)
+})
+```
+
+#### 路由设计
+
+```js
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.post('/articles', (req, res) => {
+  res.send('post /articles')
+})
+
+app.get('/articles', (req, res) => {
+  res.send('get /articles')
+})
+
+app.get('/articles/:id', (req, res) => {
+  res.send('get /articles/:id')
+})
+
+app.patch('/articles/:id', (req, res) => {
+  res.send('patch /articles/:id')
+})
+
+app.delete('/articles/:id', (req, res) => {
+  res.send('delete /articles/:id')
+})
+```
+
+#### 处理 Body 请求数据
+
+```js
+// 配置解析请求体数据 application/json
+// 它会把解析到的请求体数据放到 req.body 中
+// 注意：一定要在使用之前就挂载这个中间件
+app.use(express.json())
+```
+
+### 创建文章
+
+```js
+app.post('/articles', async (req, res, next) => {
+  try {
+    // 1. 获取客户端表单数据
+    const { article } = req.body
+
+    // 2. 数据验证
+    if (!article || !article.title || !article.description || !article.body) {
+      return res.status(422).json({
+        error: '请求参数不符合规则要求'
+      })
+    }
+
+    // 3. 把验证通过的数据插入数据库中
+    //    成功 -> 发送成功响应
+    //    失败 -> 发送失败响应
+    await dbClient.connect()
+
+    const collection = dbClient.db('test').collection('articles')
+
+    article.createdAt = new Date()
+    article.updatedAt = new Date()
+    const ret = await collection.insertOne(article)
+
+    article._id = ret.insertedId
+    
+    res.status(201).json({
+      article
+    })
+  } catch (err) {
+    // 由错误处理中间件统一处理
+    next(err)
+    // res.status(500).json({
+    //   error: err.message
+    // })
+  }
+})
+```
+
+### 获取文章列表
+
+```js
+app.get('/articles', async (req, res, next) => {
+  try {
+    let { _page = 1, _size = 10 } = req.query
+    _page = Number.parseInt(_page)
+    _size = Number.parseInt(_size)
+    await dbClient.connect()
+    const collection = dbClient.db('test').collection('articles')
+    const ret = await collection
+      .find() // 查询数据
+      .skip((_page - 1) * _size) // 跳过多少条 10 1 0 2 10 3 20 n
+      .limit(_size) // 拿多少条
+    const articles = await ret.toArray()
+    const articlesCount = await collection.countDocuments()
+    res.status(200).json({
+      articles,
+      articlesCount
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+```
+
+### 获取单个文章
+
+```js
+app.get('/articles/:id', async (req, res, next) => {
+  try {
+    await dbClient.connect()
+    const collection = dbClient.db('test').collection('articles')
+
+    const article = await collection.findOne({
+      _id: ObjectID(req.params.id)
+    })
+
+    res.status(200).json({
+      article
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+```
+
+### 更新文章
+
+```js
+app.patch('/articles/:id', async (req, res, next) => {
+  try {
+    await dbClient.connect()
+    const collection = dbClient.db('test').collection('articles')
+
+    await collection.updateOne({
+      _id: ObjectID(req.params.id)
+    }, {
+      $set: req.body.article
+    })
+
+    const article = await await collection.findOne({
+      _id: ObjectID(req.params.id)
+    })
+
+    res.status(201).json({
+      article
+    })
+  } catch (err) {
+    next(err)
+  }
+})
+```
+
+### 删除文章
+
+```js
+app.delete('/articles/:id', async (req, res, next) => {
+  try {
+    await dbClient.connect()
+    const collection = dbClient.db('test').collection('articles')
+    await collection.deleteOne({
+      _id: ObjectID(req.params.id)
+    })
+    res.status(204).json({})
+  } catch (err) {
+    next(err)
+  }
+})
+```
+
 
