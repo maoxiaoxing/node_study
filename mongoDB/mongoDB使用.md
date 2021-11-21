@@ -137,3 +137,71 @@ NoSQL 数据库有一个缺点：其在事务处理与一致性方面无法与 R
 3、需要高度的伸缩性
 对关系型数据库而言，当表的大小达到一定数量级后，其性能会急剧下降。这时可以使用多台 MongoDB 服务器搭建一个集群环境，实现最大程度的扩展，且不影响性能。
 
+## 安装 MongoDB
+
+> 建议参考官方文档中的安装教程：https://docs.mongodb.com/manual/installation/
+
+- [在 Linux 中安装 MongoDB](https://docs.mongodb.com/manual/administration/install-on-linux/)
+  * 方式一：使用 Linux 发行版中的包管理器安装，例如 CentOS  Linux 中的 yum、Ubuntu 中的 apt
+  * 方式二：下载安装包手动安装
+- [在 macOS 中安装 MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
+  * 方式一：使用 Homebrew 包管理器安装管理 MongoDB 服务
+  * 方式二：下载安装包手动安装
+- [在 Windows 中安装 MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)
+  * 方式一：使用 .msi 安装程序快速安装
+  * 方式二：下载安装包手动安装
+
+从学习角度考虑建议下载安装包手动安装的方式来安装 MongoDB，这样我们可以知道更多的细节。在熟悉了以后可以使用更简单的方式。
+下面我以在 Windows 系统上下载安装包手动安装的方式为例演示安装过程。
+
+### 注意事项
+
+- 关于 MongoDB 的版本号
+  * MongoDB 版本形式为 X.Y.Z，例如 4.4.2
+  * 如果 Y 是奇数（例如 4.3），则为开发版，建议开发测试使用
+  * 如果 Y 是偶数（例如 4.4），则为稳定版，建议生产环境使用
+- 从版本 3.2 之后不再支持 32 位操作系统
+- 课程中使用到的版本是最新稳定版 4.4
+  * Windows Server 2019
+  * Windows 10 / Windows Server 2016
+  * macOS 10.13 及更高版本
+  * MongoDB 不支持 WSL（Windows Subsystem for Linux）
+
+### 安装 MongoDB
+
+> 这里以 Windows 手动安装 MongoDB 为例。
+
+1、下载 MongoDB 安装包
+
+- https://www.mongodb.com/try/download/community
+
+2、解压压缩包，将解压出来的资源文件放到一个稳定的目录中
+
+3、关于 MongoDB 软件包目录文件
+
+| 文件名 | 说明 |
+| -- | -- |
+| mongod.exe | 服务端，用来启动数据库服务的 |
+| mongo.exe | 客户端，用来连接数据库服务操作数据库 |
+
+4、将 MongoDB 安装包中的 bin 目录配置到环境 PATH 变量
+配置 PATH 环境变量的目的是为了能够在命令行中的任何位置都能够访问到 bin 目录中的可执行程序。
+
+5、确认是否配置成功
+
+```shell
+mongod --version
+```
+
+> 注意：如果是配置环境变量之前打开的命令行，则需要在配置完环境变量之后将命令行重启才能生效。
+
+### 启动和停止 MongoDB 数据库服务
+
+```shell
+mongod --dbpath="数据存储目录"
+```
+
+> mongod 默认监听 127.0.0.1:27017。
+
+如果单独执行 mongod，它会默认使用执行 mongod 命令所处磁盘根目录/data/db 作为数据存储目录。
+
