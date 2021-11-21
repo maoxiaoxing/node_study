@@ -291,3 +291,248 @@ mongo --username alice --password --authenticationDatabase admin --host mongodb0
 - exit
 - quit()
 - Ctrl + C
+
+## MongoDB 基础概念
+
+到目前为止，我们已经学习了：
+
+- 安装 MongoDB
+- 启动 MongoDB 数据库服务
+- 使用 mongo Shell 连接 MongoDB
+
+接下来我们主要学习的内容就是如何管理 MongoDB 中的数据，但是在具体的操作之前要先来了解一下 MongoDB 数据库中的一些基本概念。
+
+- MongoDB 中的数据存储结构
+- 数据库
+- 集合
+- 文档
+
+### MongoDB 中的数据存储结构
+
+由于 MongoDB 是文档型数据库，其中存储的数据就是熟悉的 JSON 格式数据。
+
+- 你可以把 MongoDB 数据库想象为一个超级大对象
+- 对象里面有不同的集合
+- 集合中有不同的文档
+
+```shell
+{
+  // 数据库 Database
+  "京东": {
+    // 集合 Collection，对应关系型数据库中的 Table
+    "用户": [
+      // 文档 Document，对应关系型数据库中的 Row
+      {
+        // 数据字段 Field，对应关系数据库中的 Column
+        "id": 1,
+        "username": "张三",
+        "password": "123"
+      },
+      {
+        "id": 2,
+        "username": "李四",
+        "password": "456"
+      }
+      // ...
+    ],
+    "商品": [
+      {
+        "id": 1,
+        "name": "iPhone Pro Max",
+        "price": 100
+      },
+      {
+        "id": 2,
+        "name": "iPad Pro",
+        "price": 80
+      }
+    ],
+    "订单": []
+    // ...
+  },
+
+  // 数据库
+  "淘宝": {}
+
+  // ...
+}
+```
+
+### 数据库
+
+在 MongoDB 中，数据库包含一个或多个文档集合。
+
+### 查看数据库列表
+
+```shell
+show dbs
+```
+
+### 查看当前数据库
+
+```shell
+db
+```
+
+MongoDB 中默认的数据库为 test，如果你没有创建新的数据库，集合将存放在 test 数据库中。
+有一些数据库名是保留的，可以直接访问这些有特殊作用的数据库。
+
+- admin：从权限的角度来看，这是"root"数据库。要是将一个用户添加到这个数据库，这个用户自动继承所有数据库的权限。一些特定的服务器端命令也只能从这个数据库运行，比如列出所有的数据库或者关闭服务器。
+- local： 这个数据永远不会被复制，可以用来存储限于本地单台服务器的任意集合
+- config：当Mongo用于分片设置时，config数据库在内部使用，用于保存分片的相关信息。
+
+### 创建/切换数据库
+
+```shell
+use <DATABASE_NAME>
+```
+
+> 在 MongoDB 中数据库只有真正的有了数据才会被创建出来。
+
+你可以切换到不存在的数据库。首次将数据存储在数据库中（例如通过创建集合）时，MongoDB 会创建数据库。例如，以下代码在 insertOne() 操作期间创建数据库 myNewDatabase 和集合 myCollection：
+
+```js
+use myNewDatabase
+db.myCollection.insertOne( { x: 1 } );
+```
+
+### 数据库名称规则
+
+https://docs.mongodb.com/manual/reference/limits/#naming-restrictions
+- 不区分大小写，但是建议全部小写
+- 不能包含空字符。
+- 数据库名称不能为空，并且必须少于64个字符。
+- Windows 上的命名限制
+  ○ 不能包括 /\. "$*<>:|? 中的任何内容
+- Unix 和 Linux 上的命名限制
+  ○ 不能包括 /\. "$ 中的任何字符
+
+### 删除数据库
+
+1、使用 use 命令切换到要删除的数据库
+2、使用 db.dropDatabase() 删除当前数据库
+
+### 集合
+
+集合类似于关系数据库中的表，MongoDB 将文档存储在集合中。
+
+![](https://img2020.cnblogs.com/blog/1575596/202111/1575596-20211121110556194-243901712.png)
+
+#### 创建集合
+
+如果不存在集合，则在您第一次为该集合存储数据时，MongoDB 会创建该集合。
+
+```js
+db.myNewCollection2.insert( { x: 1 } )
+```
+
+MongoDB提供 db.createCollection() 方法来显式创建具有各种选项的集合，例如设置最大大小或文档验证规则。如果未指定这些选项，则无需显式创建集合，因为在首次存储集合数据时，MongoDB 会创建新集合。
+
+#### 集合名称规则
+
+集合名称应以下划线或字母字符开头，并且：
+- 不能包含 $
+- 不能为空字符串
+- 不能包含空字符
+- 不能以 . 开头
+- 长度限制
+  * 版本 4.2 最大 120 个字节
+  * 版本 4.4 最大 255 个字节
+
+#### 查看集合
+
+```shell
+show collections
+```
+
+#### 删除集合
+
+```shell
+db.集合名称.drop()
+```
+
+### 文档
+
+- MongoDB 将数据记录存储为 BSON 文档
+- BSON（Binary JSON）是 JSON 文档的二进制表示形式，它比 JSON 包含更多的数据类型
+- [BSON 规范](https://bsonspec.org/)
+- [BSON 支持的数据类型](https://docs.mongodb.com/manual/reference/bson-types/)
+
+#### 文档结构
+
+MongoDB 文档由字段和值对组成，并具有以下结构： 
+
+```json
+{
+   field1: value1,
+   field2: value2,
+   field3: value3,
+   ...
+   fieldN: valueN
+}
+```
+
+#### 字段名称
+
+文档对字段名称有以下限制：
+- 字段名称 _id 保留用作主键；它的值在集合中必须是唯一的，不可变的，并且可以是数组以外的任何类型。
+- 字段名称不能包含空字符。
+- 顶级字段名称不能以美元符号 $ 开头。
+  * 从 MongoDB 3.6 开始，服务器允许存储包含点 . 和美元符号 $ 的字段名称
+
+#### MongoDB 中的数据类型
+
+字段的值可以是任何 BSON 数据类型，包括其他文档，数组和文档数组。例如，以下文档包含各种类型的值：
+
+```json
+var mydoc = {
+    _id: ObjectId("5099803df3f4948bd2f98391"),
+    name: { first: "Alan", last: "Turing" },
+    birth: new Date('Jun 23, 1912'),
+    death: new Date('Jun 07, 1954'),
+    contribs: [ "Turing machine", "Turing test", "Turingery" ],
+    views : NumberLong(1250000)
+}
+```
+
+上面的字段具有以下数据类型：
+
+- _id 保存一个 ObjectId 类型
+- name 包含一个嵌入式文档，该文档包含 first 和 last 字段
+- birth 和 death 持有 Date 类型的值
+- contribs 保存一个字符串数组
+- views 拥有 NumberLong 类型的值
+
+下面是 MongoDB 支持的常用数据类型。
+
+| 类型 | 整数标识符 | 别名（字符串标识符） |
+| -- | -- | -- |
+| Double | 1 | 1	“double” |
+| String | 2 | “string” |
+| Object | 3 | “object” |
+| Array | 4 | “array” |
+| Binary data | 5 | “binData” |
+| ObjectId | 7 | “objectId” |
+| Boolean | 8 | “bool” |
+| Date | 9 | “date” |
+| Null | 10 | “null” |
+| Regular Expression | 11 | “regex” |
+| 32-bit integer | 16 | “int” |
+| Timestamp | 17 | “timestamp” |
+| 64-bit integer | 18 | “long” |
+| Decimal128 | 19 | 19	“decimal” |
+
+#### _id 字段
+
+在 MongoDB 中，存储在集合中的每个文档都需要一个唯一的 _id 字段作为主键。如果插入的文档省略 _id 字段，则 MongoDB 驱动程序会自动为 _id 字段生成 ObjectId。
+
+_id 字段具有以下行为和约束：
+
+- 默认情况下，MongoDB 在创建集合时会在 _id 字段上创建唯一索引。
+- _id 字段始终是文档中的第一个字段
+- _id 字段可以包含任何 BSON 数据类型的值，而不是数组。
+
+
+
+
+
