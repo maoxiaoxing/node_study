@@ -13,7 +13,7 @@ exports.getDb = async () => {
 }
 
 exports.saveDb = async (db) => {
-  const data = JSON.stringify(db)
+  const data = JSON.stringify(db, null, '  ')
   await writeFile(dbPath, data)
 }
 

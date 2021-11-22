@@ -81,8 +81,26 @@ app.post('/todos', async (req, res) => {
   }
 })
 
-app.patch('/todos/:id', (req, res) => {
-  res.send('patch todos')
+app.patch('/todos/:id', async (req, res) => {
+  try {
+    const todo = req.body
+    if (!todo.title) {
+      return res.status(422).json(mapStatus(422, todo))
+    }
+
+    const db = await getDb()
+
+    const ret = db.todos.find(item => item.id === req.params.id)
+    if (!ret) {
+      return res.status(200).json(mapStatus(404))
+    }
+    Object.assign(ret, todo)
+    await saveDb(db)
+
+    res.status(200).json(mapStatus(200))
+  } catch (err) {
+    res.status(200).json(mapStatus(500))
+  }
 })
 
 app.delete('/todos', (req, res) => {
