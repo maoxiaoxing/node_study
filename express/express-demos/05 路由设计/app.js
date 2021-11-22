@@ -103,8 +103,23 @@ app.patch('/todos/:id', async (req, res) => {
   }
 })
 
-app.delete('/todos', (req, res) => {
-  res.send('delete todos')
+app.delete('/todos/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+
+    const db = await getDb()
+    const index = db.todos.findIndex((item) => item.id === id)
+    if (index < 0) {
+      return res.status(200).json(mapStatus(404))
+    }
+
+    db.todos.splice(index, 1)
+    await saveDb(db)
+
+    res.status(200).json(mapStatus(200))
+  } catch (err) {
+    res.status(200).json(mapStatus(500))
+  }
 })
 
 app.listen(3000, () => {
