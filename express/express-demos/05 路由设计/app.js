@@ -1,5 +1,6 @@
 const express = require('express')
 const fs = require('fs')
+const { getDb } = require('./db')
 
 const app = express()
 
@@ -25,28 +26,20 @@ const mapStatus = (code, data, restObj) => {
   }
 }
 
-app.get('/todos', (req, res) => {
-  fs.readFile('./db.json', 'utf-8', (err, data) => {
-    if (err) {
-      return res.status(500).json({
-        error: err.message
-      })
-    }
-
-    const db = JSON.parse(data)
+app.get('/todos', async (req, res) => {
+  try {
+    const db = await getDb()
     res.status(200).json(mapStatus(200, db.todos, {length: db.todos.length}))
-  })
+  } catch (err) {
+    res.status(500).json({
+      error: err.message
+    })
+  }
 })
 
-app.get('/todos/:id', (req, res) => {
-  fs.readFile('./db.json', 'utf-8', (err, data) => {
-    if (err) {
-      return res.status(500).json({
-        error: err.message
-      })
-    }
-
-    const db = JSON.parse(data)
+app.get('/todos/:id', async (req, res) => {
+  try {
+    const db = await getDb()
     const todo = db.todos.find((item) => item.id === req.params.id)
 
     if (!todo) {
@@ -54,8 +47,11 @@ app.get('/todos/:id', (req, res) => {
     }
 
     res.status(200).json(mapStatus(200, todo))
-  })
-
+  } catch (err) {
+    res.status(500).json({
+      error: err.message
+    })
+  }
 })
 
 app.post('/todos', (req, res) => {
