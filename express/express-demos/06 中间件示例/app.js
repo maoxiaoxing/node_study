@@ -26,6 +26,15 @@ app.use(myLogger)
 //   res.send('USER')
 // })
 
+// 多个函数处理
+// app.get('/user/:id', function (req, res, next) {
+//   console.log('ID:', req.params.id)
+//   next()
+// }, function (req, res, next) {
+//   console.log('user info')
+//   res.send('User Info')
+// })
+
 app.get('/', (req, res) => {
   res.send('hello world')
 })
