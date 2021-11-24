@@ -14,17 +14,20 @@ app.use(myLogger)
 //   next()
 // })
 
+
 // 限制请求路径
 // app.use('/user/:id', function (req, res, next) {
 //   console.log('Request Type:', req.method)
 //   next()
 // })
 
+
 // 限制请求方法 + 请求路径
 // app.get('/user/:id', function (req, res, next) {
 //   console.log(req.method, req.params.id)
 //   res.send('USER')
 // })
+
 
 // 多个函数处理
 // app.get('/user/:id', function (req, res, next) {
@@ -34,6 +37,7 @@ app.use(myLogger)
 //   console.log('user info')
 //   res.send('User Info')
 // })
+
 
 // 为同一个路径定义多个处理中间件
 // app.get('/user/:id', function (req, res, next) {
@@ -49,6 +53,7 @@ app.use(myLogger)
 //   console.log(req.params.id)
 // })
 
+
 // 要从路由器中间件堆栈中跳过其余中间件功能，请调用 next('route') 将控制权传递给下一条路由
 // app.get('/user/:id', function (req, res, next) {
 //   if (req.params.id === '0') next('route')
@@ -57,6 +62,20 @@ app.use(myLogger)
 //   res.send('regular')
 // })
 
+
+// 
+function logOriginalUrl (req, res, next) {
+  console.log('Request URL:', req.originalUrl)
+  next()
+}
+function logMethod (req, res, next) {
+  console.log('Request Type:', req.method)
+  next()
+}
+var logStuff = [logOriginalUrl, logMethod]
+app.get('/user/:id', logStuff, (req, res) => {
+  res.send('get /user info')
+})
 
 app.get('/', (req, res) => {
   res.send('hello world')
