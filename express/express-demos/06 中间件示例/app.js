@@ -8,6 +8,14 @@ const myLogger = (req, res, next) => {
 }
 app.use(myLogger)
 
+// 不关心请求路径
+// app.use(function (req, res, next) {
+//   console.log('Time:', Date.now())
+//   next()
+// })
+
+// 
+
 app.get('/', (req, res) => {
   res.send('hello world')
 })
