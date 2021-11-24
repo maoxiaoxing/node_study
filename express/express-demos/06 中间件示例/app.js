@@ -49,8 +49,21 @@ app.use(myLogger)
 //   console.log(req.params.id)
 // })
 
+// 要从路由器中间件堆栈中跳过其余中间件功能，请调用 next('route') 将控制权传递给下一条路由
+// app.get('/user/:id', function (req, res, next) {
+//   if (req.params.id === '0') next('route')
+//   else next()
+// }, function (req, res, next) {
+//   res.send('regular')
+// })
+
+
 app.get('/', (req, res) => {
   res.send('hello world')
+})
+
+app.get('/user/:id', (req, res) => {
+  res.send('get /user')
 })
 
 app.get('/about', (req, res) => {
