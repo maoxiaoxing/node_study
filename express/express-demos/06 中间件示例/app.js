@@ -14,7 +14,11 @@ app.use(myLogger)
 //   next()
 // })
 
-// 
+// 限制请求路径
+app.use('/user/:id', function (req, res, next) {
+  console.log('Request Type:', req.method)
+  next()
+})
 
 app.get('/', (req, res) => {
   res.send('hello world')
