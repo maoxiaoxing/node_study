@@ -35,6 +35,20 @@ app.use(myLogger)
 //   res.send('User Info')
 // })
 
+// 为同一个路径定义多个处理中间件
+// app.get('/user/:id', function (req, res, next) {
+//   console.log('ID:', req.params.id)
+//   next()
+// }, function (req, res, next) {
+//   console.log('user info')
+//   res.send('User Info')
+//   next()
+// })
+// app.get('/user/:id', function (req, res, next) {
+//   // res.end(req.params.id)
+//   console.log(req.params.id)
+// })
+
 app.get('/', (req, res) => {
   res.send('hello world')
 })
