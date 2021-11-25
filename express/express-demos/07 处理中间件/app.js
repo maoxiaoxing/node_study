@@ -125,6 +125,11 @@ router.delete('/todos/:id', async (req, res, next) => {
 
 app.use('/mxx', router)
 
+// 处理404
+app.use((req, res, next) => {
+  res.status(404).send('404 Not Found')
+})
+
 app.use((err, req, res, next) => {
   console.log(err)
   res.status(200).json(mapStatus(500))
