@@ -34,16 +34,16 @@ const mapStatus = (code, data, restObj) => {
   }
 }
 
-app.get('/todos', async (req, res) => {
+router.get('/todos', async (req, res, next) => {
   try {
     const db = await getDb()
     res.status(200).json(mapStatus(200, db.todos, {length: db.todos.length}))
   } catch (err) {
-    res.status(200).json(mapStatus(500))
+    next(err)
   }
 })
 
-app.get('/todos/:id', async (req, res) => {
+router.get('/todos/:id', async (req, res, next) => {
   try {
     const db = await getDb()
     const todo = db.todos.find((item) => item.id === req.params.id)
@@ -54,11 +54,11 @@ app.get('/todos/:id', async (req, res) => {
 
     res.status(200).json(mapStatus(200, todo))
   } catch (err) {
-    res.status(200).json(mapStatus(500))
+    next(err)
   }
 })
 
-app.post('/todos', async (req, res) => {
+router.post('/todos', async (req, res, next) => {
   try {
     const todo = req.body
     console.log(todo)
@@ -78,11 +78,11 @@ app.post('/todos', async (req, res) => {
 
     res.status(200).json(mapStatus(200))
   } catch (err) {
-    res.status(200).json(mapStatus(500))
+    next(err)
   }
 })
 
-app.patch('/todos/:id', async (req, res) => {
+router.patch('/todos/:id', async (req, res, next) => {
   try {
     const todo = req.body
     if (!todo.title) {
@@ -100,11 +100,11 @@ app.patch('/todos/:id', async (req, res) => {
 
     res.status(200).json(mapStatus(200))
   } catch (err) {
-    res.status(200).json(mapStatus(500))
+    next(err)
   }
 })
 
-app.delete('/todos/:id', async (req, res) => {
+router.delete('/todos/:id', async (req, res, next) => {
   try {
     const { id } = req.params
 
@@ -119,11 +119,16 @@ app.delete('/todos/:id', async (req, res) => {
 
     res.status(200).json(mapStatus(200))
   } catch (err) {
-    res.status(200).json(mapStatus(500))
+    next(err)
   }
 })
 
-app.use('/kk', router)
+app.use('/mxx', router)
+
+app.use((err, req, res, next) => {
+  console.log(err)
+  res.status(200).json(mapStatus(500))
+})
 
 app.listen(3000, () => {
   console.log('server is running')
