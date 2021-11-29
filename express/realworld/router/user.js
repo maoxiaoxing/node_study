@@ -1,13 +1,15 @@
 const express = require('express')
 const userCtrl = require('../controller/user')
+const userValidator = require('../validator/user')
+
 
 const router = express.Router()
 
 // 用户登录
-router.post('/user/login', userCtrl.login)
+router.post('/user/login', userValidator.login, userCtrl.login)
 
 // 用户注册
-router.post('/user', userCtrl.register)
+router.post('/user', userValidator.register, userCtrl.register)
 
 // 获取当前用户
 router.get('/user', userCtrl.getCurrentUser)
