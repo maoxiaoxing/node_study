@@ -9,7 +9,7 @@ exports.login = async (req, res, next) => {
     const token = await jwt.sign({
       userId: user._id
     }, jwtSecret, {
-      expiresIn: 60 * 60 * 24
+      expiresIn: 60 * 60 * 24 // 设置 token 过期时间
     })
 
     // 3. 发送成功响应（包含 token 的用户信息）
