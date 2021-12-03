@@ -1,4 +1,4 @@
-const { verify } = require('../util/jwt')
+const { verify } = require('../utils/jwt')
 const { jwtSecret } = require('../config/config.default')
 const { User } = require('../model')
 
