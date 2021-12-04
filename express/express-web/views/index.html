@@ -8,6 +8,14 @@
 </head>
 <body>
   <h1>在 Express 中托管静态资源</h1>
-  <ul>^_^</ul>
+  <!-- <ul>^_^</ul> -->
+
+  <div>{{ foo }}</div>
+  <ul>
+    {{ each todos }}
+    <!-- $value 就是遍历项 -->
+    <li>{{ $value.title }}</li>
+    {{ /each }}
+  </ul>
 </body>
 </html>

@@ -1,6 +1,8 @@
 const express = require('express')
 const fs = require('fs')
 const path = require('path')
+const template = require('art-template')
+
 
 const app = express()
 
@@ -16,10 +18,15 @@ app.get('/', (req, res) => {
       return res.status(404).send('404 Not Found')
     }
     let str = ''
-    todos.forEach((todo) => {
-      str += `<li>${todo.title}</li>`
+    // todos.forEach((todo) => {
+    //   str += `<li>${todo.title}</li>`
+    // })
+    // const ret = data.replace('^_^', str)
+
+    const ret = template.render(data, { // 模板中使用的数据
+      foo: 'bar',
+      todos
     })
-    const ret = data.replace('^_^', str)
     res.end(ret)
   })
 })
