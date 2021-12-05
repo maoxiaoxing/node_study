@@ -2,8 +2,17 @@ const express = require('./express')
 
 const app = express()
 
-app.get('/ab+cd', (req, res) => {
+app.get('/', (req, res) => {
   res.end('get /')
+})
+
+// app.get('/ab+cd', (req, res) => {
+//   res.end('get /')
+// })
+
+app.get('/user/:userId/books/:bookId', (req, res) => {
+  console.log(req.params)
+  res.end('/user/:userId/books/:bookId')
 })
 
 app.get('/about', (req, res) => {
