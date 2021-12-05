@@ -1,14 +1,17 @@
 const http = require('http')
 const url = require('url')
 const Router = require('./route')
+const methods = require('methods')
 
 function App () {
   this._router = new Router()
 }
 
-App.prototype.get = function (path, handler) {
-  this._router.get(path, handler)
-}
+methods.forEach((method) => {
+  App.prototype[method] = function (path, handler) {
+    this._router[method](path, handler)
+  }
+})
 
 App.prototype.listen = function (...args) {
   const server = http.createServer((req, res) => {
