@@ -13,7 +13,7 @@ app.set('view options', {
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'art')
 
-// app.use('/public', express.static(path.join(__dirname, './public')))
+app.use('/public', express.static(path.join(__dirname, './public')))
 
 // 静态资源资源托管的配置
 // app.use('/public', express.static(
