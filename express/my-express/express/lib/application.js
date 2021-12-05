@@ -1,27 +1,18 @@
 const http = require('http')
 const url = require('url')
+const Router = require('./route')
 
 function App () {
-  this.routes = []
+  this._router = new Router()
 }
 
 App.prototype.get = function (path, handler) {
-  this.routes.push({
-    path,
-    method: 'get',
-    handler,
-  })
+  this._router.get(path, handler)
 }
 
 App.prototype.listen = function (...args) {
   const server = http.createServer((req, res) => {
-    const { pathname } = url.parse(req.url)
-    const method = req.method.toLowerCase()
-    const route = this.routes.find((route) => route.path === pathname && route.method === method)
-    if (route) {
-      return route.handler(req, res)
-    }
-    res.end('404 Not Found.')        
+    this._router.handle(req, res)     
   })
   server.listen(...args)
 }
