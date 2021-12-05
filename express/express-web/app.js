@@ -6,6 +6,15 @@ const template = require('art-template')
 
 const app = express()
 
+app.engine('art', require('express-art-template'))
+app.set('view options', {
+  debug: process.env.NODE_ENV !== 'production'
+})
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'art')
+
+app.use('/public', express.static(path.join(__dirname, './public')))
+
 const todos = [
   { id: 1, title: '吃饭' },
   { id: 2, title: '睡觉' },
@@ -23,11 +32,18 @@ app.get('/', (req, res) => {
     // })
     // const ret = data.replace('^_^', str)
 
-    const ret = template.render(data, { // 模板中使用的数据
+
+    // const ret = template.render(data, { // 模板中使用的数据
+    //   foo: 'bar',
+    //   todos
+    // })
+    // res.end(ret)
+
+
+    res.render('index.art', {
       foo: 'bar',
-      todos
+      todos,
     })
-    res.end(ret)
   })
 })
 
