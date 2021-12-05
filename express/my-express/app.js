@@ -10,6 +10,21 @@ app.get('/', (req, res) => {
 //   res.end('get /')
 // })
 
+app.get('/bar', (req, res, next) => {
+  console.log('bar 1')
+  next()
+}, (req, res, next) => {
+  console.log('bar 2')
+  next()
+}, (req, res, next) => {
+  console.log('bar 3')
+  next()
+})
+
+app.get('/bar', (req, res, next) => {
+  res.end('get /bar')
+})
+
 app.get('/foo', (req, res, next) => {
   console.log('foo 1')
   setTimeout(() => {
