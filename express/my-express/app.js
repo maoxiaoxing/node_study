@@ -10,6 +10,22 @@ app.get('/', (req, res) => {
 //   res.end('get /')
 // })
 
+app.get('/foo', (req, res, next) => {
+  console.log('foo 1')
+  setTimeout(() => {
+    next()
+  }, 1000)
+})
+
+app.get('/foo', (req, res, next) => {
+  console.log('foo 2')
+  next()
+})
+
+app.get('/foo', (req, res, next) => {
+  res.end('get /foo')
+})
+
 app.get('/user/:userId/books/:bookId', (req, res) => {
   console.log(req.params)
   res.end('/user/:userId/books/:bookId')
