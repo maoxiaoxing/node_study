@@ -35,7 +35,7 @@ Router.prototype.handle = function (req, res) {
       req.params = req.params || {}
       Object.assign(req.params, layer.params)
     }
-    if (match && layer.method === method) {
+    if (match) {
       return layer.handler(req, res, next)
     }
     next()

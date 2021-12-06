@@ -5,8 +5,21 @@ function Route () {
   this.stack = []
 }
 
-Route.prototype.dispatch = function () {
-
+Route.prototype.dispatch = function (req, res, out) {
+  // 遍历内层的 stack
+  let index = 0
+  const method = req.method.toLowerCase()
+  const next = () => {
+    if (index >= this.stack.length) {
+      return out()
+    }
+    const layer = this.stack[index++]
+    if (layer.method === method) {
+      return layer.handler(req, res, next)
+    }
+    next()
+  }
+  next()
 }
 
 methods.forEach((method) => {
