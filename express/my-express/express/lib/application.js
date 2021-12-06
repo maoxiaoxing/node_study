@@ -13,6 +13,10 @@ methods.forEach((method) => {
   }
 })
 
+App.prototype.use = function (path, ...handlers) {
+  this._router.use(path, handlers)
+}
+
 App.prototype.listen = function (...args) {
   const server = http.createServer((req, res) => {
     this._router.handle(req, res)     

@@ -16,6 +16,15 @@ Layer.prototype.match = function (pathname) {
     })
     return true
   }
+
+  if (this.isUserMiddleware) {
+    if (this.path === '/') {
+      return true
+    }
+    if (pathname.startsWidth(`${this.path}`)) {
+      return true
+    }
+  }
   return false
 }
 

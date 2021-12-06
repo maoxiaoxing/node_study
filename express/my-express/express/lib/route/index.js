@@ -22,7 +22,6 @@ methods.forEach((method) => {
 
 Router.prototype.handle = function (req, res) {
   const { pathname } = url.parse(req.url)
-  const method = req.method.toLowerCase()
 
   let index = 0
   const next = () => {
@@ -61,6 +60,18 @@ Router.prototype.handle = function (req, res) {
   //   return layer.handler(req, res)
   // }
   // res.end('404 Not Found.')  
+}
+
+Router.prototype.use = function (path, handlers) {
+  if (typeof path === 'function') {
+    handlers.unshift(path)
+    path = '/'
+  }
+  handlers.forEach((handler) => {
+    const layer = new Layer(path, handler)
+    layer.isUseMiddleware = true
+    this.stack.push(layer)
+  })
 }
 
 module.exports = Router

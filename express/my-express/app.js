@@ -2,6 +2,16 @@ const express = require('./express')
 
 const app = express()
 
+app.use('/', (req, res, next) => {
+  console.log(1)
+  next()
+}, (req, res, next) => {
+  console.log(2)
+  next()
+}, (req, res, next) => {
+  res.end('hello')
+})
+
 app.get('/', (req, res) => {
   res.end('get /')
 })
