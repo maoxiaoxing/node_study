@@ -2,16 +2,21 @@ const url = require('url')
 const methods = require('methods')
 // const pathRegexp = require('path-to-regexp')
 const Layer = require('./layer')
+const Route = require('./route')
 
 function Router () {
   this.stack = []
 }
 
 methods.forEach((method) => {
-  Router.prototype[method] = function (path, handler) {
-    const layer = new Layer(path, handler)
-    layer.method = method
+  Router.prototype[method] = function (path, handlers) {
+    // const layer = new Layer(path, handler)
+    // layer.method = method
+    // this.stack.push(layer)
+    const route = new Route()
+    const layer = new Layer(path, route.dispatch.bind(route))
     this.stack.push(layer)
+    route[method](path, handlers)
   }
 })
 
