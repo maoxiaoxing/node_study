@@ -1,7 +1,12 @@
 const Koa = require('koa')
 const Router = require('@koa/router')
+const static = require('koa-static')
+const path = require('path')
+const mount = require('koa-mount')
 
 const app = new Koa()
+
+app.use(mount('/public', static(path.join(__dirname, './public'))))
 
 const router = new Router()
 
