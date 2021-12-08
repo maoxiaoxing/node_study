@@ -16,6 +16,7 @@ app.use(async (ctx, next) => {
   } catch (err) {
     ctx.status = 500
     ctx.body = '服务器端错误'
+    ctx.app.emit('error', err, ctx)
   }
 })
 
@@ -54,6 +55,10 @@ app.use(async (ctx, next) => {
   // ctx.type = 'html'
   ctx.body = data
   next()
+})
+
+app.on('error', (err) => {
+  console.log('app error', err)
 })
 
 
