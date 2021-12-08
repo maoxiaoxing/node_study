@@ -27,6 +27,13 @@ router.get('/user/:id', (ctx) => {
   ctx.body = 'get /user/:id'
 })
 
+// 只能重定向同步请求
+router.get('/bar', ctx => {
+  // setTimeout(() => {
+  // })
+  ctx.redirect('/foo')
+})
+
 app
   .use(router.routes())
   .use(router.allowedMethods())
