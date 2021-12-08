@@ -9,6 +9,16 @@ const koacompose = require('koa-compose')
 
 const app = new Koa()
 
+// 捕获中间件错误，必须保证后面的中间件也使用 async...await
+app.use(async (ctx, next) => {
+  try {
+    await next()
+  } catch (err) {
+    ctx.status = 500
+    ctx.body = '服务器端错误'
+  }
+})
+
 app.use(mount('/public', static(path.join(__dirname, './public'))))
 
 // 洋葱模型 中间件执行顺序
