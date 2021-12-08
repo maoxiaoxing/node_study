@@ -5,29 +5,32 @@ const path = require('path')
 const mount = require('koa-mount')
 const fs = require('fs')
 const util = require('util')
+const koacompose = require('koa-compose')
 
 const app = new Koa()
 
 app.use(mount('/public', static(path.join(__dirname, './public'))))
 
 // 洋葱模型 中间件执行顺序
-// const one = (ctx, next) => {
-//   console.log('in one')
-//   next()
-//   console.log('out one')
-// }
+const one = (ctx, next) => {
+  console.log('in one')
+  next()
+  console.log('out one')
+}
 
-// const two = (ctx, next) => {
-//   console.log('in two')
-//   // next()
-//   console.log('out two')
-// }
+const two = (ctx, next) => {
+  console.log('in two')
+  next()
+  console.log('out two')
+}
 
-// const three = (ctx, next) => {
-//   console.log('in three')
-//   next()
-//   console.log('out three')
-// }
+const three = (ctx, next) => {
+  console.log('in three')
+  next()
+  console.log('out three')
+}
+// 中间件合并
+app.use(koacompose([one, two, three]))
 
 // app.use(one)
 // app.use(two)
