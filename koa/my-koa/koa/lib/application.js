@@ -6,9 +6,8 @@ class Application {
   }
 
   listen (...args) {
-    const server = http.createServer((req, res) => {
-      this.callback()
-    })
+    const that = this
+    const server = http.createServer(that.callback())
     server.listen(...args)
   }
 
