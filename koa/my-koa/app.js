@@ -3,6 +3,8 @@ const Koa = require('./koa')
 const app = new Koa()
 
 const one = (ctx, next) => {
+  console.log(ctx.req.url)
+  console.log(ctx.req.method)
   console.log('one >>')
   next()
   console.log('one <<')
@@ -21,8 +23,8 @@ const three = (ctx, next) => {
 }
 
 app.use(one)
-app.use(two)
-app.use(three)
+// app.use(two)
+// app.use(three)
 
 app.listen(3000, () => {
   console.log(`http://loacalhost:3000/`)
