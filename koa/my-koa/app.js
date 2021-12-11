@@ -1,6 +1,23 @@
 const Koa = require('./koa')
+const fs = require('fs')
+const util = require('util')
+const readFile = util.promisify(fs.readFile)
 
 const app = new Koa()
+
+app.use(async (ctx) => {
+  // ctx.body = 'string'
+
+  // ctx.body = 123
+
+  // const data = await readFile('./package.json')
+  // ctx.body = data
+
+  // ctx.body = fs.createReadStream('./package.json')
+
+  // ctx.body = { foo: 'bar' }
+  // ctx.body = [1, 2, 3]
+})
 
 const one = (ctx, next) => {
   console.log(ctx.req.url)
@@ -22,7 +39,7 @@ const three = (ctx, next) => {
   console.log('three <<')
 }
 
-app.use(one)
+// app.use(one)
 // app.use(two)
 // app.use(three)
 

@@ -2,6 +2,8 @@ const http = require('http')
 const context = require('./context')
 const request = require('./request')
 const response = require('./response')
+const { Stream } = require('stream')
+
 
 class Application {
   constructor () {
@@ -61,7 +63,8 @@ class Application {
       fnMiddleware(context)
         .then(() => {
           console.log('end')
-          res.end('cb koa')
+          // res.end('cb koa')
+          respond(context)
         })
         .catch((err) => {
           // console.log('err', err)
@@ -71,6 +74,25 @@ class Application {
     }
 
     return handleRequest
+  }
+}
+
+function respond (ctx) {
+  const body = ctx.body
+  const res = ctx.res
+
+  if (body === null) {
+    res.statusCode = 204
+    return res.end()
+  }
+
+  if (typeof body === 'string') return res.end(body)
+  if (Buffer.isBuffer(body)) return res.end(body)
+  if (body instanceof Stream) return body.pipe(ctx.res)
+  if (typeof body === 'number') return res.end(body + '')
+  if (typeof body === 'object') {
+    const jsonStr = JSON.stringify(body)
+    return res.end(jsonStr)
   }
 }
 
