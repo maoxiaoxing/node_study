@@ -1,0 +1,33 @@
+2022-02-04 10:42:03,202 INFO 21200 [Timer] D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js next time will execute after 64076801ms at 2022-02-05 04:30:00.002
+2022-02-04 10:42:03,202 INFO 21200 [Timer] D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js next time will execute after 47876798ms at 2022-02-05 00:00:00.000
+2022-02-04 10:42:03,202 INFO 21200 [Timer] D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js next time will execute after 47877798ms at 2022-02-05 00:00:01.000
+2022-02-04 10:42:03,069 INFO 28452 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js
+2022-02-04 10:42:03,069 INFO 28452 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js
+2022-02-04 10:42:03,069 INFO 28452 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js
+2022-02-04 10:43:17,143 INFO 9572 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js
+2022-02-04 10:43:17,143 INFO 9572 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js
+2022-02-04 10:43:17,143 INFO 9572 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js
+2022-02-04 10:43:32,733 INFO 29764 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js
+2022-02-04 10:43:32,733 INFO 29764 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js
+2022-02-04 10:43:32,733 INFO 29764 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js
+2022-02-04 10:46:38,500 INFO 26060 [Timer] D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js next time will execute after 63801503ms at 2022-02-05 04:30:00.003
+2022-02-04 10:46:38,500 INFO 26060 [Timer] D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js next time will execute after 47601500ms at 2022-02-05 00:00:00.000
+2022-02-04 10:46:38,501 INFO 26060 [Timer] D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js next time will execute after 47602500ms at 2022-02-05 00:00:01.001
+2022-02-04 10:46:38,370 INFO 28812 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js
+2022-02-04 10:46:38,370 INFO 28812 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js
+2022-02-04 10:46:38,370 INFO 28812 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js
+2022-02-04 10:47:30,357 INFO 27296 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js
+2022-02-04 10:47:30,357 INFO 27296 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js
+2022-02-04 10:47:30,357 INFO 27296 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js
+2022-02-04 10:48:22,048 INFO 25492 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js
+2022-02-04 10:48:22,048 INFO 25492 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js
+2022-02-04 10:48:22,048 INFO 25492 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js
+2022-02-04 10:49:48,784 INFO 6284 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js
+2022-02-04 10:49:48,784 INFO 6284 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js
+2022-02-04 10:49:48,784 INFO 6284 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js
+2022-02-04 10:52:09,857 INFO 4008 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js
+2022-02-04 10:52:09,857 INFO 4008 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js
+2022-02-04 10:52:09,857 INFO 4008 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js
+2022-02-04 10:53:47,109 INFO 17708 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-multipart\app\schedule\clean_tmpdir.js
+2022-02-04 10:53:47,109 INFO 17708 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\clean_log.js
+2022-02-04 10:53:47,109 INFO 17708 [egg-schedule]: register schedule D:\my_code\my_github\node_study\egg\egg-example\node_modules\egg-logrotator\app\schedule\rotate_by_file.js
